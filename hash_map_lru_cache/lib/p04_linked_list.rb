@@ -50,11 +50,7 @@ class LinkedList
   end
 
   def include?(key)
-    link = @head
-    while link.next != @tail
-      return true if link.key == key
-      link = link.next
-    end
+    return true unless get(key).nil?
     false
   end
 
