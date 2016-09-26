@@ -4,7 +4,10 @@
 # The result is called a 'digital root'.
 # Do not use string conversion within your method.
 def digital_root(number)
-
+  while number > 9
+    number = number / 10 + number % 10
+  end
+  number
 end
 
 # Write a function that takes a message and an increment amount.
@@ -12,51 +15,95 @@ end
 # Assume lowercase and no punctuation.
 # Preserve spaces.
 def caesar_cipher(string, shift)
+  chr_map = {}
+  num_map = {}
+  ('a'..'z').to_a.each_with_index do |c, idx|
+    chr_map[idx] = c
+    num_map[c] = idx
+  end
 
+  string.split('').map do |c|
+    c == " " ? " " : chr_map[((num_map[c] + shift) % 26)]
+  end.join('')
 end
 
 # Write a function that takes two strings.
 # Return the longest common substring.
 def common_substrings(string_one, string_two)
-
+  max = 0
+  outstr = nil
+  0.upto(string_one.length - 1).each do |i|
+    (i + 1).upto(string_one.length) do |j|
+      if string_two.include?(string_one[i...j]) && (j - i) > max
+        outstr = string_one[i...j]
+        max = j - i
+      end
+    end
+  end
+  outstr
 end
 
 # Write a function that takes an array of integers and returns their sum.
 # Use recursion.
 def sum_rec(numbers)
-
+  return nil if numbers.empty?
+  return numbers[0] if numbers.length == 1
+  last = numbers.pop
+  return sum_rec(numbers) + last
 end
 
 # Write a function that takes n, the length of the sequence.
 # Return the first n elements from the fibonnacci sequence as an array.
 def fibs(n)
-
+  return [] if n == 0
+  return [0] if n == 1
+  return [0, 1] if n == 2
+  pv_fibs = fibs(n - 1)
+  pv_fibs << pv_fibs[-1] + pv_fibs[-2]
 end
 
 # Write a function that takes a string.
 # Return true if the string is a palindrome, otherwise return false.
 # It should take less time and memory than reversing the string.
 def is_palindrome?(string)
-
+  0.upto(string.length / 2).each do |i|
+    return false if string[i, 1] != string[string.length - 1 - i, 1]
+  end
+  true
 end
 
 # Write a method that takes a string as input.
 # It should return true if the input is a valid IPv4 address.
 # Valid IPs are anything between '0.0.0.0' and '255.255.255.255'.
 def valid_ip?(string)
-
+  return false unless string.split('.').length == 4
+  return false unless string =~ /^\d+(\.\d+){3}$/
+  string.split('.').map(&:to_i).all? do |num|
+    num >= 0 && num <= 255
+  end
 end
 
 # Implement the Folding Cipher.
 # It folds the alphabet in half and uses the adjacent letter.
 # a -> z, b -> y, c -> x, m -> n, etc...
 def folding_cipher(string)
-
+  alpha_arr = ('a'..'z').to_a
+  map = {}
+  alpha_arr.each_with_index do |c, idx|
+    map[c] = alpha_arr[25 - idx]
+  end
+  string.chars.map {|c| map[c]}.join('')
 end
 
 # Write a method that finds all the unique substrings for a word.
 def uniq_subs(string)
-
+  subs = []
+  0.upto(string.length - 1) do |i|
+    1.upto(string.length) do |j|
+      subs << string[i, j] unless subs.include?(string[i, j])
+    end
+  end
+  subs
 end
 
 # Given an array of integers find the largest contiguous subsum.
@@ -277,5 +324,5 @@ end
 
 # Write a method that takes an array and returns all its permutations.
 def permutations(array)
-  
+
 end
