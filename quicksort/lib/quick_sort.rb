@@ -19,6 +19,16 @@ class QuickSort
     sort1(left) + middle + sort1(right)
   end
 
+  def quicksort(arr)
+    return arr if arr.length < 2
+    pivot_idx = rand(arr.length)
+    arr[0], arr[pivot_idx] = arr[pivot_idx], arr[0]
+    pivot = arr.first
+    left_arr = arr.select {|el| el < pivot}
+    right_arr = arr.select {|el| el >= pivot}
+    return quicksort(left_arr) + pivot + quicksort(right_arr)
+  end
+
   # In-place. Uses O(log(n)) space for recursion.
   def self.sort2!(array, start = 0, length = array.length, &prc)
     prc ||= Proc.new { |el1, el2| el1 <=> el2 }
