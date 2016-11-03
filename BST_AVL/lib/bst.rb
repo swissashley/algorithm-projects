@@ -133,10 +133,10 @@ class BinarySearchTree
     else
       return node.left unless node.right
       return node.right unless node.left
-      t = node
-      node = t.right.min
-      node.right = BinarySearchTree.delete_min!(t.right)
-      node.left = t.left
+      temp = node
+      node = temp.right.min
+      node.right = BinarySearchTree.delete_min!(temp.right)
+      node.left = temp.left
     end
     node
   end
