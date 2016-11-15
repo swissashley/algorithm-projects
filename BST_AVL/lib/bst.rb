@@ -2,14 +2,15 @@ class BSTNode
   attr_accessor :left, :right
   attr_reader :value
 
-  def initialize(value)
+  def initialize(value = nil, left = nil, right = nil)
     @value = value
-    @left = nil
-    @right = nil
+    @left = left
+    @right = right
   end
 end
 
 class BinarySearchTree
+  attr_reader :root
   def initialize
     @root = nil
   end
