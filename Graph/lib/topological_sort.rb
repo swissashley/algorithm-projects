@@ -7,6 +7,8 @@ def topological_sort(vertices)
   # tarian_sort(vertices)
 end
 
+# Space O(V)
+# Time O(V + E)
 def khan_sort(vertices)
   queue = []
   in_edge_count = {}
@@ -29,17 +31,26 @@ def khan_sort(vertices)
   out_arr
 end
 
+# Space O(V)
+# Time O(V + E)
 def tarian_sort(vertices)
+  out_arr = []
+  explored = Set.new
 
+  vertices.each do |vertex| # O(|v|)
+    dfs!(vertex, explored, out_arr) unless explored.include?(vertex)
+  end
+
+  out_arr
 end
 
-def dfs!(vertex, explored, ordering)
+def dfs!(vertex, explored, out_arr)
   explored.add(vertex)
 
   vertex.out_edges.each do |edge| # O(|e|)
     new_vertex = edge.to_vertex
-    dfs!(new_vertex, explored, ordering) unless explored.include?(new_vertex) 
+    dfs!(new_vertex, explored, out_arr) unless explored.include?(new_vertex)
   end
 
-  ordering.unshift(vertex)
+  out_arr.unshift(vertex)
 end
